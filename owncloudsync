@@ -1,0 +1,44 @@
+#!/bin/bash
+
+################### INSTALLATION
+# mkdir -p ~/dev/owncloud
+# cd ~/dev/owncloud
+# wget http://download.owncloud.com/desktop/stable/owncloudclient-1.8.4.tar.xz
+# tar -xvJf owncloudclient-1.8.4.tar.xz
+# wget http://ndevilla.free.fr/iniparser/iniparser-3.1.tar.gz
+# sudo apt-get install libsqlite3-dev libneon27-dev libqt4-dev libqtkeychain0 qtkeychain-dev libqt4-sql-sqlite cmake
+#
+## coompilieren ownCloud client - takes some time
+#
+# mkdir client-build
+# cd client-build
+# cmake -DCMAKE_BUILD_TYPE="Release" ../owncloudclient-1.8.4
+# make
+# sudo make install
+# sudo ldconfig
+#
+## enter credentials 
+#
+# vi or nano ~/.netrc
+#  
+# 
+#   machine mein.server.de
+#           login benutzername
+#           password passwort
+# 
+#
+# chmod 0600 ~/.netrc
+#
+# Example usage:
+#
+# owncloudcmd --non-interactive -n /var/daten/owncloud/ https://mein.server.de/remote.php/webdav/
+
+
+
+OC=$(ps ax | grep [o]wncloudcmd)
+if [ "$OC" != "" ]; then
+        exit 1
+else
+        nice -n 19 /usr/local/bin/owncloudcmd --non-interactive -n /home/pi/musik/ http://someOwncloudServer.de/remote.php/webdav/
+        exit 0
+fi
