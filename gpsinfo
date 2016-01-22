@@ -1,0 +1,8 @@
+#!/bin/bash
+# /usr/local/sbin/gpsinfo
+data=$(gpspipe -w | grep -m 1 TPV | sed s/","/" "/g | sed s/"{"/" "/g | sed s/"}"/" "/g)
+if [ "$1" = "" ]; then
+        echo "USAGE: gpsinfo alt | lat | lon"
+else
+        for i in $data; do echo $i | grep $1 | sed s/":"/" "/g | awk '{print $2}'; done
+fi
