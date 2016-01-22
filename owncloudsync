@@ -8,7 +8,7 @@
 # wget http://ndevilla.free.fr/iniparser/iniparser-3.1.tar.gz
 # sudo apt-get install libsqlite3-dev libneon27-dev libqt4-dev libqtkeychain0 qtkeychain-dev libqt4-sql-sqlite cmake
 #
-## coompilieren ownCloud client - takes some time
+## compilieren ownCloud client - takes some time
 #
 # mkdir client-build
 # cd client-build
@@ -32,6 +32,10 @@
 # Example usage:
 #
 # owncloudcmd --non-interactive -n /var/daten/owncloud/ https://mein.server.de/remote.php/webdav/
+#
+#
+# In order to do this every minute, you could make this entry to your crontab
+# *  *    * * *   pi      /home/pi/owncloudsync.sh > /dev/null 2>&1
 
 
 
