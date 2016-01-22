@@ -1,1 +1,1 @@
-# open-automitive
+# open-automotive
