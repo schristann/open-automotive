@@ -1,7 +1,7 @@
 sudo apt-get update
-sudo apt-get install bluez python-gobject
+sudo apt-get install bluez python-gobject blueman
 sudo update-rc.d -f dbus defaults
-
+sudo usermod -G bluetooth -a <username>
 # Discover the Button (bring it in discoverable mode)
 hcitool scan
 
