@@ -1,0 +1,22 @@
+sudo apt-get update
+sudo apt-get install bluez python-gobject blueman
+sudo update-rc.d -f dbus defaults
+sudo usermod -G bluetooth -a <username>
+# Discover the Button (bring it in discoverable mode)
+hcitool scan
+
+# Copy the mac address eg DC:2C:26:A1:0A:42
+
+sudo nano /usr/bin/bluez-simple-agent
+# replace occurrence of ‘KeyboardDisplay’ with ‘DisplayYesNo’ and run
+
+bluez-simple-agent hci0 DC:2C:26:A1:0A:42
+
+# trust the device permanently
+bluez-test-device trusted DC:2C:26:A1:0A:42 yes
+
+# test trust should output "1"
+bluez-test-device trusted DC:2C:26:A1:0A:42 yes
+
+# connect device with (should do automatically)
+bluez-test-input connect DC:2C:26:A1:0A:42 yes
