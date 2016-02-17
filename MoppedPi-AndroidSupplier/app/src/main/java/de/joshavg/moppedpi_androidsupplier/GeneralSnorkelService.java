@@ -5,6 +5,8 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by josha on 06.02.16.
  */
@@ -25,11 +27,32 @@ public class GeneralSnorkelService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        if(!String.valueOf(event.getPackageName()).equals("com.google.android.apps.maps")) {
+            return;
+        }
+
         Log.d("snorkel", String.valueOf(event.getPackageName()));
         Log.d("snorkel", String.valueOf(event.getContentDescription()));
-        Log.d("snorkel", event.getEventType() + "type");
-        Log.d("snorkel", String.valueOf(event.getAction()) + "action");
-        Log.d("snorkel", String.valueOf(event.getRecordCount()) + "recordcount");
+        //Log.d("snorkel", String.valueOf(event.getAction()) + "action");
+        Log.d("snorkel", String.valueOf(event.getRecordCount()) + " recordcount");
+
+        logConstantName(event.getEventType(), event);
+        logConstantName(event.getAction(), event);
+        logConstantName(event.getContentChangeTypes(), event);
+    }
+
+    private void logConstantName(int value, AccessibilityEvent event) {
+        Field[] fields = AccessibilityEvent.class.getDeclaredFields();
+        for(Field field : fields) {
+            try {
+                int fieldValue = field.getInt(event);
+                if(fieldValue == value) {
+                    Log.d("snorkel",field.getName());
+                }
+            } catch (Exception e) {
+                // noop
+            }
+        }
     }
 
     @Override
